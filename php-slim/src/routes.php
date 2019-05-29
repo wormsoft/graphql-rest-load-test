@@ -14,4 +14,11 @@ return function (App $app) {
         $data = $fetcher->getProductList();
         return $response->withJson($data);
     });
+
+    $app->get('/test-sqlite', function (Request $request, Response $response, array $args) use ($container) {
+        /** @var PDO $databse */
+
+        $databse = $container->get('db');
+        $databse->exec('CREATE TABLE product(id INTEGER PRIMARY KEY, title VARCHAR(255) NOT NULL, price INTEGER)');
+    });
 };

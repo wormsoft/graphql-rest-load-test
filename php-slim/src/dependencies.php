@@ -24,4 +24,8 @@ return function (App $app) {
         $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
         return $logger;
     };
+
+    $container['db'] = function ($container) {
+        return new PDO($container['settings']['db']['dsn']);
+    };
 };
