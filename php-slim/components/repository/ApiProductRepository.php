@@ -6,7 +6,7 @@
  * Time: 6:38
  */
 
-namespace App\components\api;
+namespace App\components\repository;
 
 
 use SQLite3;

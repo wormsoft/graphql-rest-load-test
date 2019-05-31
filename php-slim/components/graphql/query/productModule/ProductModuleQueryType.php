@@ -9,7 +9,7 @@
 namespace App\components\graphql\query\productModule;
 
 
-use App\components\api\ApiProductRepository;
+use App\components\repository\ApiProductRepository;
 use App\components\graphql\query\productModule\product\ProductQueryType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
