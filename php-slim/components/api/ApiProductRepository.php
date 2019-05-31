@@ -6,26 +6,32 @@
  * Time: 6:38
  */
 
-namespace App\components;
+namespace App\components\api;
 
 
-use PDO;
+use SQLite3;
 
 class ApiProductRepository
 {
 
     public function getProduct($id)
     {
-        /** @var PDO $database */
-        $app = new \Slim\App;
-        $container = $app->getContainer();
-        $database = $container->get('db');
-        $product = $database->exec('SELECT (*) FROM product WHERE product.id ='.$id);
-        return $product;
+        $sqlLite = new SQLite3(DB);
+        $rea = $sqlLite->query('SELECT * FROM product WHERE id=' . $id);
+        return $rea->fetchArray(SQLITE3_ASSOC);
     }
 
-    public function getProductList($query){
+    public function getProductList($query)
+    {
+        $sqlLite = new SQLite3(DB);
+        $rea = $sqlLite->query('SELECT * FROM product');
 
+        $products = [];
+        while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
+            $products[] = $row;
+        }
+
+        return $products;
     }
 
 }

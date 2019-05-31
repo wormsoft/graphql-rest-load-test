@@ -8,7 +8,7 @@ if (PHP_SAPI == 'cli-server') {
         return false;
     }
 }
-
+const DB = '/' . __DIR__ . '/../database/db.sqlite';
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
@@ -28,6 +28,5 @@ $middleware($app);
 // Register routes
 $routes = require __DIR__ . '/../src/routes.php';
 $routes($app);
-
 // Run app
 $app->run();

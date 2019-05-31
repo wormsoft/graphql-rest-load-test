@@ -8,6 +8,7 @@
 
 namespace App\components\graphql\query;
 
+use App\components\graphql\query\productModule\ProductModuleQueryType;
 use GraphQL\Type\Definition\ObjectType;
 
 class QueryType extends ObjectType
@@ -17,7 +18,12 @@ class QueryType extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-
+                    'productModule' => [
+                        'type' => new ProductModuleQueryType(),
+                        'resolve' => function () {
+                            return true;
+                        }
+                    ]
                 ];
             },
         ];

@@ -16,33 +16,7 @@ return function (App $app) {
         return $response->withJson($data);
     });
 
-    $app->get('/test-sqlite', function (Request $request, Response $response, array $args) use ($container) {
-        /** @var PDO $databse */
-
-        $request->getParsedBodyParam('');
-        $databse = $container->get('db');
-        $databse->exec('CREATE TABLE product(
-          id INTEGER PRIMARY KEY,
-          articul VARCHAR(255),
-          title VARCHAR(255) NOT NULL,
-          category_id INTEGER,
-          producer_id INTEGER,
-          price INTEGER,
-          description_short TEXT,
-          description_full TEXT,
-          status INTEGER(11),
-          isActive INTEGER(1),
-          isNew INTEGER(1),
-          isPopular INTEGER(1),
-          created_at INTEGER,
-          updated_at INTEGER,
-          discount VARCHAR(255)          
-          )');
-    });
-
-    $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-
-        //$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+    $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
@@ -54,7 +28,6 @@ return function (App $app) {
             $variables = isset($input['variables']) ? $input['variables'] : [];
             $operation = isset($input['operation']) ? $input['operation'] : null;
         }
-
         if (!empty($variables) && !is_array($variables)) {
             try {
                 $variables = json_decode($variables);
@@ -88,7 +61,6 @@ return function (App $app) {
         } catch (Exception $e) {
             throw $e;
         }
-
-        return $result;
+        return $response->withJson($result);
     });
 };
