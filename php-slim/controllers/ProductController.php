@@ -24,4 +24,9 @@ class ProductController
         return $response->withJson((new ApiProductRepository)->getProductList($request->getParam('query')));
     }
 
+    public function getProductVariants(Request $request, Response $response, array $args)
+    {
+        return $response->withJson((new ApiProductRepository)->getProductVariants($request->getParam('productId')));
+    }
+
 }

@@ -2,19 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: nik
- * Date: 31.05.19
- * Time: 10:54
+ * Date: 03.06.19
+ * Time: 11:34
  */
 
-namespace App\components\graphql\query\productModule\product;
+namespace App\components\graphql\query\productModule\product\variant;
 
 
-use App\components\graphql\query\productModule\product\variant\ProductVariantQueryType;
-use App\components\repository\ApiProductRepository;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
-class ProductQueryType extends ObjectType
+class ProductVariantQueryType extends ObjectType
 {
     public function __construct()
     {
@@ -23,6 +21,7 @@ class ProductQueryType extends ObjectType
             'fields' => function () {
                 return [
                     'id' => Type::string(),
+                    'product_id' => Type::string(),
                     'articul' => Type::string(),
                     'title' => Type::string(),
                     'price' => Type::int(),
@@ -36,12 +35,6 @@ class ProductQueryType extends ObjectType
                     'isPopular' => Type::int(),
                     'created_at' => Type::int(),
                     'updated_at' => Type::int(),
-                    'variant' => [
-                        'type' => Type::listOf(new ProductVariantQueryType()),
-                        'resolve' => function ($root) {
-                            return (new ApiProductRepository)->getProductVariants($root['id']);
-                        }
-                    ],
                 ];
             }
         ];

@@ -34,4 +34,16 @@ class ApiProductRepository
         return $products;
     }
 
+    public function getProductVariants($productId)
+    {
+        $sqlLite = new SQLite3(DB);
+        $rea = $sqlLite->query('SELECT * FROM product_variant WHERE product_id=' . $productId);
+
+        $variants = [];
+        while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
+            $variants[] = $row;
+        }
+        return $variants;
+    }
+
 }
