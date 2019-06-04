@@ -1,6 +1,7 @@
 const pkg = require('./package')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
+let API_HOST = 'http://localhost:8080'
 module.exports = {
   mode: 'universal',
 
@@ -10,12 +11,12 @@ module.exports = {
   head: {
     title: pkg.name,
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: pkg.description}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
       {
         rel: 'stylesheet',
         href:
@@ -27,7 +28,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {color: '#fff'},
 
   /*
   ** Global CSS
@@ -49,7 +50,26 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/apollo',
+    '@nuxtjs/proxy',
   ],
+  proxy: {
+    '/graphql': 'http://localhost:8080',
+    '/api': {
+      target: 'http://localhost:8080',
+      pathRewrite: {
+        '^/api' : '/'
+      }
+    }
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'http://localhost:3000/graphql',
+      }
+    }
+  },
   /*
   ** Axios module configuration
   */

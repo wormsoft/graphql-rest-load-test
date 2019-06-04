@@ -25,7 +25,7 @@ class ProductVariantQueryType extends ObjectType
                     'articul' => Type::string(),
                     'title' => Type::string(),
                     'price' => Type::int(),
-                    'discount' => Type::int(),
+                    'discount' => Type::string(),
                     'description_short' => Type::string(),
                     'description_full' => Type::string(),
                     'category' => Type::int(),

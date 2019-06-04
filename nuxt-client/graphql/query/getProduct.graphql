@@ -1,0 +1,37 @@
+query ($productId: Int!) {
+  productModule {
+    singleProduct(id:$productId) {
+      id
+      articul
+      title
+      price
+      discount
+      description_short
+      description_full
+      category
+      status
+      isActive
+      isNew
+      isPopular
+      created_at
+      updated_at
+      variant {
+        id
+        articul
+        product_id
+        title
+        price
+        discount
+        description_short
+        description_full
+        category
+        status
+        isActive
+        isNew
+        isPopular
+        created_at
+        updated_at
+      }
+    }
+  }
+}
