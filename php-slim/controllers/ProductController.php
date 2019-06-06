@@ -26,8 +26,8 @@ class ProductController
     {
         $apiProductRepository = new ApiProductRepository();
         $prodList = $apiProductRepository->getProductList($request->getParam('query'));
-        foreach ($prodList as $key => $item) {
-            $prodList[$key]['variants'] = $apiProductRepository->getProductVariants($item['id']);
+        foreach ($prodList['products'] as $key => $item) {
+            $prodList['products'][$key]['variants'] = $apiProductRepository->getProductVariants($item['id']);
         }
         return $response->withJson($prodList);
     }

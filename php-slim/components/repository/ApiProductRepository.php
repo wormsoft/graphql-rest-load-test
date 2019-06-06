@@ -23,15 +23,32 @@ class ApiProductRepository
 
     public function getProductList($query)
     {
+        $count = 18;
+        $offset = 0;
+        $where = null;
         $sqlLite = new SQLite3(DB);
-        $rea = $sqlLite->query('SELECT * FROM product');
+
+        if (isset($query['search'])) {
+            $where = " WHERE title LIKE " . "'" . $query['search'] . "'";
+        }
+        if (isset($query['page'])) {
+            $offset = $query['page'] * $count;
+        }
+
+        $rea = $sqlLite->query("SELECT * FROM product" . $where . " LIMIT $count OFFSET $offset");
+        $count = $sqlLite->query("SELECT COUNT(id) FROM product" . $where);
 
         $products = [];
         while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
             $products[] = $row;
         }
 
-        return $products;
+        $result = [
+            'products' => $products,
+            'totalCount' => reset($count->fetchArray(2))
+        ];
+
+        return $result;
     }
 
     public function getProductVariants($productId)

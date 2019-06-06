@@ -1,24 +1,10 @@
-query {
+query ($query: ProductQueryInput){
   productModule {
-    productList {
-      id
-      articul
-      title
-      price
-      discount
-      description_short
-      description_full
-      category
-      status
-      isActive
-      isNew
-      isPopular
-      created_at
-      updated_at
-      variant {
+    catalog(query:$query) {
+      totalCount
+      products {
         id
         articul
-        product_id
         title
         price
         discount
@@ -31,6 +17,23 @@ query {
         isPopular
         created_at
         updated_at
+        variant {
+          id
+          articul
+          product_id
+          title
+          price
+          discount
+          description_short
+          description_full
+          category
+          status
+          isActive
+          isNew
+          isPopular
+          created_at
+          updated_at
+        }
       }
     }
   }

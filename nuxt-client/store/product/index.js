@@ -14,13 +14,14 @@ export const actions = {
     return data.data.productModule.singleProduct
   },
   async GET_PRODUCT_LIST_BY_QUERY_GQL(context, query) {
+    console.log(query)
     let data = await this.app.apolloProvider.defaultClient.query({
       query: getProductList,
       variables: {
         query: query
       }
     })
-    return data.data.productModule.productList
+    return data.data.productModule.catalog
   },
   async GET_PRODUCT_BY_ID_REST(context, productId) {
     let data = await api.post('api/product', {id: productId})

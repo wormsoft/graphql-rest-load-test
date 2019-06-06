@@ -1,12 +1,8 @@
 <template>
   <div>
     <div>
-      <legend>GQL</legend>
-      <span>{{productGQL}}</span>
-    </div>
-    <div>
-      <legend>REST</legend>
-      <span>{{productREST}}</span>
+      <legend>PRODUCT</legend>
+      <span>{{product}}</span>
     </div>
   </div>
 
@@ -17,25 +13,27 @@
     name: "_id",
     data() {
       return {
-        productGQL: null,
-        productREST: null,
+        product: null,
       }
     },
     methods: {
       getProductGQL(id) {
         this.$store.dispatch('product/GET_PRODUCT_BY_ID_GQL', id).then((data) => {
-          this.productGQL = data
+          this.product = data
         })
       },
       getProductREST(id) {
         this.$store.dispatch('product/GET_PRODUCT_BY_ID_REST', id).then((data) => {
-          this.productREST = data
+          this.product = data
         })
       },
     },
     mounted() {
-      this.getProductGQL(this.$route.params.id)
-      this.getProductREST(this.$route.params.id)
+      if (this.$route.query.type === 'gql') {
+        this.getProductGQL(this.$route.params.id)
+      } else {
+        this.getProductREST(this.$route.params.id)
+      }
     }
   }
 </script>
