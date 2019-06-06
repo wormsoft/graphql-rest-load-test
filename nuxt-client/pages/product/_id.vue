@@ -11,10 +11,10 @@
       </div>
       <div class="variants">
         <div class="variant" v-for="variant in product.variants">
-          <div style="width: 400px">
+          <div class="title-holder">
             <span>{{variant.title}}</span>
           </div>
-          <div>
+          <div class="img-holder">
             <img src="http://dungeon.su/gallery/items/56_1_1540915419.jpg">
           </div>
         </div>
@@ -72,6 +72,12 @@
     height: 100px;
     margin-bottom: 15px;
     border: 1px solid white;
+  }
+  .variant .img-holder {
+
+  }
+  .variant .title-holder {
+    width: 400px;
   }
   .variant img{
     max-height: 100%;
