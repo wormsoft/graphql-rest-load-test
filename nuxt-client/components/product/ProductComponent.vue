@@ -5,7 +5,7 @@
       <div class="product-info">
         <span class="title">{{title}}</span>
         <br>
-        <span class="price">{{price}}</span>
+        <span class="price">{{price}} руб</span>
       </div>
     </nuxt-link>
   </div>
@@ -54,5 +54,8 @@
     text-align: center;
     color: white;
     text-decoration: none;
+  }
+  .catalog a {
+    text-decoration: none ;
   }
 </style>

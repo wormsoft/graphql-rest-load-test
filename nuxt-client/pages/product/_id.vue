@@ -1,11 +1,26 @@
 <template>
-  <div>
-    <div>
-      <legend>PRODUCT</legend>
-      <span>{{product}}</span>
+  <div class="product">
+    <div class="img-container">
+      <img src="http://dungeon.su/gallery/items/56_1_1540915419.jpg">
+    </div>
+    <div class="product-info">
+      <div class="description">
+      <span>
+        {{product}}
+      </span>
+      </div>
+      <div class="variants">
+        <div class="variant" v-for="variant in product.variants">
+          <div style="width: 400px">
+            <span>{{variant.title}}</span>
+          </div>
+          <div>
+            <img src="http://dungeon.su/gallery/items/56_1_1540915419.jpg">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -13,7 +28,9 @@
     name: "_id",
     data() {
       return {
-        product: null,
+        product: {
+
+        },
       }
     },
     methods: {
@@ -39,5 +56,24 @@
 </script>
 
 <style scoped>
-
+  .product{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .img-container{
+    width: 30%;
+  }
+  .product-info{
+    width: 60%;
+  }
+  .variant {
+    display: flex;
+    width: max-content;
+    height: 100px;
+    margin-bottom: 15px;
+    border: 1px solid white;
+  }
+  .variant img{
+    max-height: 100%;
+  }
 </style>
