@@ -22,21 +22,20 @@ class ProductQueryType extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-                    'id' => Type::string(),
+                    'id' => Type::int(),
                     'articul' => Type::string(),
                     'title' => Type::string(),
+                    'img' => Type::string(),
                     'price' => Type::int(),
-                    'discount' => Type::int(),
-                    'description_short' => Type::string(),
-                    'description_full' => Type::string(),
-                    'category' => Type::int(),
+                    'discount' => Type::string(),
+                    'description' => Type::string(),
                     'status' => Type::int(),
                     'isActive' => Type::int(),
                     'isNew' => Type::int(),
                     'isPopular' => Type::int(),
                     'created_at' => Type::int(),
                     'updated_at' => Type::int(),
-                    'variant' => [
+                    'variants' => [
                         'type' => Type::listOf(new ProductVariantQueryType()),
                         'resolve' => function ($root) {
                             return (new ApiProductRepository)->getProductVariants($root['id']);

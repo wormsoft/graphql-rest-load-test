@@ -8,31 +8,29 @@ query ($query: ProductQueryInput){
         title
         price
         discount
-        description_short
-        description_full
-        category
+        description
         status
         isActive
         isNew
         isPopular
         created_at
         updated_at
-        variant {
+        img
+        variants {
           id
           articul
           product_id
           title
           price
           discount
-          description_short
-          description_full
-          category
+          description
           status
           isActive
           isNew
           isPopular
           created_at
           updated_at
+          img
         }
       }
     }

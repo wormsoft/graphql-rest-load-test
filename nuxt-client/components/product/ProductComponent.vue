@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <nuxt-link :to="{name:'product-id', params:{id:id}, query: $route.query}">
-      <img src="http://dungeon.su/gallery/items/56_1_1540915419.jpg">
+      <img :src="img">
       <div class="product-info">
         <span class="title">{{title}}</span>
         <br>
@@ -40,14 +40,15 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-width: 275px;
+    width: 25%;
     text-align: center;
     font-size: 18px;
     padding: 10px;
   }
 
   .product img {
-    max-height: 300px;
+    height: 200px;
+    width: 200px;
   }
 
   .product-info {

@@ -56,4 +56,25 @@ return function (App $app) {
         }
         return $response->withJson($result);
     });
+    $app->get('/db', function () {
+        $files = [];
+        foreach (new DirectoryIterator('../public/images') as $fileInfo) {
+            if ($fileInfo->getType() == 'file') {
+                $files[] = 'images/' . $fileInfo->getFilename();
+            }
+        }
+
+        $sqlLite = new SQLite3(DB);
+        $rea = $sqlLite->query("SELECT * FROM product");
+
+        while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
+            $rFile = rand(0, 8);
+            $products[] = $row;
+            $r = $sqlLite->query('SELECT * FROM product_variant WHERE product_id=' . $row['id']);
+            while ($row2 = $r->fetchArray(SQLITE3_ASSOC)) {
+                $sqlLite->exec('UPDATE "product_variant" SET img = ' . '"' . $files[$rFile] . '"' . ' WHERE "id" = ' . $row2['id']);
+            }
+            $sqlLite->exec('UPDATE "product" SET img = ' . '"' . $files[$rFile] . '"' . ' WHERE "id" = ' . $row['id']);
+        }
+    });
 };

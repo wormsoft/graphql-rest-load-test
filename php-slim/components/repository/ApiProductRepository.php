@@ -23,7 +23,7 @@ class ApiProductRepository
 
     public function getProductList($query)
     {
-        $count = 18;
+        $count = 16;
         $offset = 0;
         $where = null;
         $sqlLite = new SQLite3(DB);

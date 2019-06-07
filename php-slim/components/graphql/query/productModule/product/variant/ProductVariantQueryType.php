@@ -20,15 +20,14 @@ class ProductVariantQueryType extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-                    'id' => Type::string(),
+                    'id' => Type::int(),
                     'product_id' => Type::string(),
                     'articul' => Type::string(),
                     'title' => Type::string(),
-                    'price' => Type::int(),
+                    'img' => Type::string(),
+                    'price' => Type::float(),
                     'discount' => Type::string(),
-                    'description_short' => Type::string(),
-                    'description_full' => Type::string(),
-                    'category' => Type::int(),
+                    'description' => Type::string(),
                     'status' => Type::int(),
                     'isActive' => Type::int(),
                     'isNew' => Type::int(),
