@@ -58,7 +58,6 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <GlobalSearch/>
       <v-container>
         <nuxt/>
       </v-container>

@@ -32,31 +32,21 @@
 
 <script>
   export default {
-    name: "_id",
-    data() {
+    name: '_id',
+    data () {
       return {
         product: {},
       }
     },
-    methods: {
-      getProductGQL(id) {
-        this.$store.dispatch('product/GET_PRODUCT_BY_ID_GQL', id).then((data) => {
-          this.product = data
-        })
-      },
-      getProductREST(id) {
-        this.$store.dispatch('product/GET_PRODUCT_BY_ID_REST', id).then((data) => {
-          this.product = data
-        })
-      },
-    },
-    mounted() {
-      if (this.$route.query.type === 'gql') {
-        this.getProductGQL(this.$route.params.id)
+    async asyncData ({ store, route }) {
+      let data = {}
+      if (route.query.type === 'gql') {
+        data.product = await store.dispatch('product/GET_PRODUCT_BY_ID_GQL', route.params.id)
       } else {
-        this.getProductREST(this.$route.params.id)
+        data.product = await store.dispatch('product/GET_PRODUCT_BY_ID_REST', route.params.id)
       }
-    }
+      return data
+    },
   }
 </script>
 
