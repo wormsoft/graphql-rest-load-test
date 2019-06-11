@@ -1,7 +1,9 @@
+require('dotenv').config()
 const pkg = require('./package')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
-let API_HOST = 'http://localhost:8080'
+let API_HOST = process.env.API_HOST
+console.log(API_HOST)
 module.exports = {
   mode: 'universal',
 
@@ -55,9 +57,9 @@ module.exports = {
     '@nuxtjs/proxy',
   ],
   proxy: {
-    '/graphql': 'http://localhost:8080',
+    '/graphql': API_HOST,
     '/api': {
-      target: 'http://localhost:8080',
+      target: API_HOST,
       pathRewrite: {
         '^/api' : '/'
       }
@@ -66,7 +68,7 @@ module.exports = {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://localhost:3000/graphql',
+        httpEndpoint: API_HOST + '/graphql',
       }
     }
   },
