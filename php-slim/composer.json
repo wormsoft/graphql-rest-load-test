@@ -29,7 +29,9 @@
     "slim/slim": "^3.1",
     "symfony/http-foundation": "^4.3",
     "webonyx/graphql-php": "^0.13.4",
-    "ext-sqlite3": "*"
+    "ext-sqlite3": "*",
+    "ext-memcache": "*",
+    "ext-memcached": "*"
   },
   "require-dev": {
     "phpunit/phpunit": ">=5.0"

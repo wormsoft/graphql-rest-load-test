@@ -28,4 +28,15 @@ return function (App $app) {
     $container['db'] = function ($container) {
         return new PDO($container['settings']['db']['dsn']);
     };
+    $container['memcached'] = function () {
+        if (!class_exists('Memcached')){
+            return false;
+        }
+        $meminstance = new Memcached();
+        $meminstance->addServer('localhost', 11211);
+        return $meminstance;
+    };
+    $container['ProductController'] = function () use ($app){
+        return new \App\controllers\ProductController($app);
+    };
 };

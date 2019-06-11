@@ -29,7 +29,18 @@ class ProductModuleQueryType extends ObjectType
                         'args' => [
                             'id' => Type::nonNull(Type::int())
                         ],
-                        'resolve' => function ($root, $args) {
+                        'resolve' => function ($root, $args, $app) {
+                            $memcached = $app->getContainer()->get('memcached');
+                            if ($memcached) {
+                                $key = serialize($args);
+                                $result = $memcached->get($key);
+                                if ($result) {
+                                    return $result;
+                                }
+                                $result = (new ApiProductRepository())->getProduct($args['id']);
+                                $memcached->set($key, $result);
+                                return $result;
+                            }
                             return (new ApiProductRepository())->getProduct($args['id']);
                         }
                     ],
@@ -38,7 +49,19 @@ class ProductModuleQueryType extends ObjectType
                         'args' => [
                             'query' => new ProductQueryInputType(),
                         ],
-                        'resolve' => function ($root, $args) {
+                        'resolve' => function ($root, $args, $app) {
+                            /* @var $memcached \Memcached */
+                            $memcached = $app->getContainer()->get('memcached');
+                            if ($memcached) {
+                                $key = serialize($args);
+                                $result = $memcached->get($key);
+                                if ($result) {
+                                    return $result;
+                                }
+                                $result = (new ApiProductRepository())->getProductList($args['query']);
+                                $memcached->set($key, $result);
+                                return $result;
+                            }
                             return (new ApiProductRepository())->getProductList($args['query']);
                         }
                     ]
