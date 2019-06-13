@@ -18,13 +18,18 @@ services:
             docker: "true"
         ports:
             - 8080:8080
+        links:
+          - redis
         volumes:
             - .:/var/www
             - logs:/var/www/logs
-    memcached:
+    redis:
       networks:
         - back
-      image: memcached
+      image: redis
+      restart: always
+      volumes:
+        - ./storage/redis/data:/data
 
 networks:
   back:

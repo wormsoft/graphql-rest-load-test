@@ -9,32 +9,32 @@
 namespace App\controllers;
 
 use App\components\repository\ApiProductRepository;
-use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 class ProductController
 {
 
-    /* @var  $memcached \Memcached */
-    public $memcached;
+    /* @var  $redis \Redis */
+    public $redis;
 
     public function __construct($app)
     {
-        $this->memcached = $app->get('memcached');
+        $this->redis = $app->get('redis');
     }
 
     public function getProduct(Request $request, Response $response, array $args)
     {
         $id = $request->getParam('id');
-        if ($this->memcached) {
-            if ($prod = $this->memcached->get('product_' . $id)) {
-                return $prod;
+        if ($this->redis) {
+            $prod = $this->redis->get('product_' . $id);
+            if ($prod) {
+                return $response->withJson($prod);
             }
             $apiProductRepository = new ApiProductRepository();
             $prod = $apiProductRepository->getProduct($id);
             $prod['variants'] = $apiProductRepository->getProductVariants($prod['id']);
-            $this->memcached->set('product_' . $id, $prod);
+            $this->redis->set('product_' . $id, $prod);
             return $response->withJson($prod);
         }
         $apiProductRepository = new ApiProductRepository();
@@ -45,9 +45,9 @@ class ProductController
 
     public function getProductList(Request $request, Response $response, array $args)
     {
-        $key = serialize($request->getParam('query'));
-        if ($this->memcached) {
-            if ($productList = $this->memcached->get($key)) {
+        $key = serialize($request->getParam('query') . '_rest');
+        if ($this->redis) {
+            if ($productList = $this->redis->get($key)) {
                 return $productList;
             }
             $apiProductRepository = new ApiProductRepository();
@@ -55,7 +55,7 @@ class ProductController
             foreach ($prodList['products'] as $key => $item) {
                 $prodList['products'][$key]['variants'] = $apiProductRepository->getProductVariants($item['id']);
             }
-            $this->memcached->set($key, $prodList);
+            $this->redis->set($key, $prodList);
             return $response->withJson($prodList);
         }
 

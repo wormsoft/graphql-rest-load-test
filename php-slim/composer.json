@@ -31,7 +31,8 @@
     "webonyx/graphql-php": "^0.13.4",
     "ext-sqlite3": "*",
     "ext-memcache": "*",
-    "ext-memcached": "*"
+    "ext-memcached": "*",
+    "ext-redis": "*"
   },
   "require-dev": {
     "phpunit/phpunit": ">=5.0"

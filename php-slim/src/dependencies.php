@@ -1,5 +1,6 @@
 <?php
 
+use App\components\redis\MyRedis;
 use Slim\App;
 
 return function (App $app) {
@@ -28,13 +29,14 @@ return function (App $app) {
     $container['db'] = function ($container) {
         return new PDO($container['settings']['db']['dsn']);
     };
-    $container['memcached'] = function () {
-        if (!class_exists('Memcached')){
+    $container['redis'] = function () {
+        if (!class_exists('Redis')){
             return false;
         }
-        $meminstance = new Memcached();
-        $meminstance->addServer('localhost', 11211);
-        return $meminstance;
+        $redis = new MyRedis();
+        $redis->connect('redis',6379);
+        //$redis->flushAll();
+        return $redis;
     };
     $container['ProductController'] = function () use ($app){
         return new \App\controllers\ProductController($app);

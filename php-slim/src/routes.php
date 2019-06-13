@@ -10,7 +10,6 @@ return function (App $app) {
     $app->any('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->any('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->any('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-        $app->getContainer()->get('memcached');
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
