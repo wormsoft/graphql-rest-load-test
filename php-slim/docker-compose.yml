@@ -5,24 +5,38 @@ volumes:
         driver: local
 
 services:
-    slim:
-        build:
-          context: .
-          dockerfile: Dockerfile
-        image: php:7-alpine
-        working_dir: /var/www
-        networks:
-          - back
-        command: php -S 0.0.0.0:8080 -t public
-        environment:
-            docker: "true"
-        ports:
-            - 8080:8080
-        links:
-          - redis
-        volumes:
-            - .:/var/www
-            - logs:/var/www/logs
+    nginx:
+      build:
+        context: .
+        dockerfile: Nginx.Dockerfile
+      image: ${DOCKER_HUB_ORGANIZATION}/${DOCKER_HUB_PREFIX}nginx
+      volumes:
+        - ./docker/nginx/conf:/etc/nginx/conf.d
+        - ./docker/runtime/nginx/logs:/etc/logs/nginx
+      networks:
+        - back
+        - reverse-proxy
+      volumes_from:
+        - fpm
+      environment:
+        - VIRTUAL_HOST=${BASE_DOMAIN}
+      expose:
+        - 80
+      links:
+        - fpm
+    fpm:
+      image: zvinger/docker-fpm
+      working_dir: /var/www
+      networks:
+        - back
+      command: php-fpm
+      volumes:
+        - ./app:/var/www
+        - ./.env:/var/www/.env
+      environment:
+        XDEBUG_CONFIG: remote_host=${REMOTE_HOST}
+        PHP_IDE_CONFIG: serverName=debug
+
     redis:
       networks:
         - back
@@ -32,5 +46,8 @@ services:
         - ./storage/redis/data:/data
 
 networks:
+  reverse-proxy:
+      external:
+        name: reverse-proxy
   back:
     driver: bridge

@@ -30,15 +30,15 @@ return function (App $app) {
         return new PDO($container['settings']['db']['dsn']);
     };
     $container['redis'] = function () {
-        if (!class_exists('Redis')){
+        if (!class_exists('Redis')) {
             return false;
         }
         $redis = new MyRedis();
-        $redis->connect('redis',6379);
+        $redis->connect('redis', 6379);
         //$redis->flushAll();
         return $redis;
     };
-    $container['ProductController'] = function () use ($app){
+    $container['ProductController'] = function () use ($app) {
         return new \App\controllers\ProductController($app);
     };
 };

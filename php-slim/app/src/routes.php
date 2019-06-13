@@ -13,7 +13,6 @@ return function (App $app) {
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
-
         if (empty($query)) {
             $rawInput = file_get_contents('php://input');
             $input = json_decode($rawInput, true);

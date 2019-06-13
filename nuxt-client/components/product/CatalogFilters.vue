@@ -1,6 +1,6 @@
 <template>
   <ol>
-    <li v-for="item in getItems()">
+    <li v-for="item in this.getItems()">
       <span>{{item}}</span>
     </li>
   </ol>
@@ -14,11 +14,6 @@
       items: {
         type: Array,
       },
-    },
-    data() {
-      return {
-        items: this.getItems()
-      }
     },
     methods: {
       getItems() {
