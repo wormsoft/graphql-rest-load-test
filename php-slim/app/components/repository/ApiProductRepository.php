@@ -18,7 +18,9 @@ class ApiProductRepository
     {
         $sqlLite = new SQLite3(DB);
         $rea = $sqlLite->query('SELECT * FROM product WHERE id=' . $id);
-        return $rea->fetchArray(SQLITE3_ASSOC);
+        $product = $rea->fetchArray(SQLITE3_ASSOC);
+        $product['img'] = 'https://test-case.s4.obvu.ru/' + $product['img'];
+        return $product;
     }
 
     public function getProductList($query)

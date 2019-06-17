@@ -35,7 +35,7 @@ return function (App $app) {
         }
         $redis = new MyRedis();
         $redis->connect('redis', 6379);
-        //$redis->flushAll();
+        $redis->flushAll();
         return $redis;
     };
     $container['ProductController'] = function () use ($app) {
