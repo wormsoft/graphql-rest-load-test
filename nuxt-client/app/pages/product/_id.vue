@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <div class="img-container">
-      <img :src="'http://localhost:8080/'+product.img" style="max-width: 400px;">
+      <img :src="product.img" style="max-width: 400px;">
     </div>
     <div class="product-info">
       <div class="description">
@@ -22,7 +22,7 @@
             <td>{{variant.title}}</td>
             <td>{{variant.price}}</td>
             <td>{{variant.description}}</td>
-            <td><img :src="'http://localhost:8080/'+variant.img"></td>
+            <td><img :src="variant.img"></td>
           </tr>
         </table>
       </div>

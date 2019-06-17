@@ -24,11 +24,11 @@ export const actions = {
     return data.data.productModule.catalog
   },
   async GET_PRODUCT_BY_ID_REST(context, productId) {
-    let data = await api.post('api/product', {id: productId})
+    let data = await api.post('product', {id: productId})
     return data.data
   },
   async GET_PRODUCT_LIST_BY_QUERY_REST(context, query) {
-    let data = await api.post('api/product-list', {query: query})
+    let data = await api.post('product-list', {query: query})
     return data.data
   },
 }

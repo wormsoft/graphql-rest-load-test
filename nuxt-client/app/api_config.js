@@ -1,5 +1,5 @@
 let api_config = {
-  api_url: 'http://localhost:3000',
+  api_url: 'https://api.test-case.s4.obvu.ru/',
 }
 
 function setApiToken(token) {

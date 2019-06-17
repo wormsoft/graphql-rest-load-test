@@ -5,7 +5,6 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 let API_HOST = process.env.SITE_API_HOST
 let APP_HOST = process.env.VIRTUAL_HOST
 console.log(API_HOST, 'API_HOST')
-console.log(APP_HOST, 'APP_HOST')
 module.exports = {
   mode: 'universal',
 
@@ -70,7 +69,7 @@ module.exports = {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://' + APP_HOST + '/graphql',
+        httpEndpoint: API_HOST + '/graphql',
       }
     }
   },

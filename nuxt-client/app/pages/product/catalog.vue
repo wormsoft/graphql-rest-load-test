@@ -9,7 +9,7 @@
         :title="product.title"
         :price="product.price"
         :id="Number(product.id)"
-        :img="'http://localhost:8080/'+product.img"/>
+        :img="product.img"/>
     </div>
   </div>
 </template>
