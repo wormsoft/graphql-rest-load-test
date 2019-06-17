@@ -19,7 +19,7 @@ class ApiProductRepository
         $sqlLite = new SQLite3(DB);
         $rea = $sqlLite->query('SELECT * FROM product WHERE id=' . $id);
         $product = $rea->fetchArray(SQLITE3_ASSOC);
-        $product['img'] = 'https://' . $_SERVER['SERVER_NAME'] . $product['img'];
+        $product['img'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $product['img'];
         return $product;
     }
 
@@ -42,7 +42,7 @@ class ApiProductRepository
 
         $products = [];
         while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
-            $row['img'] = 'https://' . $_SERVER['SERVER_NAME'] . $row['img'];
+            $row['img'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $row['img'];
             $products[] = $row;
         }
 
@@ -61,7 +61,7 @@ class ApiProductRepository
 
         $variants = [];
         while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
-            $row['img'] = 'https://' . $_SERVER['SERVER_NAME'] . $row['img'];
+            $row['img'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $row['img'];
             $variants[] = $row;
         }
         return $variants;
