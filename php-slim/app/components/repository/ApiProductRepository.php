@@ -42,7 +42,7 @@ class ApiProductRepository
 
         $products = [];
         while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
-            $row['img'] = 'https://test-case.s4.obvu.ru/' . $row['img'];
+            $row['img'] = 'https://api.test-case.s4.obvu.ru' . $row['img'];
             $products[] = $row;
         }
 
