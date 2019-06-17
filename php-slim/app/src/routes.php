@@ -58,4 +58,7 @@ return function (App $app) {
     $app->options('/product-list', function (Request $request, Response $response) {
         return $response->withHeader('Access-Control-Allow-Headers','*')->withHeader('Access-Control-Allow-Origin', '*');
     });
+    $app->options('/graphql', function (Request $request, Response $response) {
+        return $response->withHeader('Access-Control-Allow-Headers','*')->withHeader('Access-Control-Allow-Origin', '*');
+    });
 };
