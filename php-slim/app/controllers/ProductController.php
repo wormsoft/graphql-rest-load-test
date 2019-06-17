@@ -40,7 +40,7 @@ class ProductController
         $apiProductRepository = new ApiProductRepository();
         $prod = $apiProductRepository->getProduct($request->getParam('id'));
         $prod['variants'] = $apiProductRepository->getProductVariants($prod['id']);
-        return $response->withJson($prod);
+        return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($prod);
     }
 
     public function getProductList(Request $request, Response $response, array $args)
@@ -56,7 +56,7 @@ class ProductController
                 $prodList['products'][$key]['variants'] = $apiProductRepository->getProductVariants($item['id']);
             }
             $this->redis->set($key, $prodList);
-            return $response->withJson($prodList);
+            return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($prodList);
         }
 
         $apiProductRepository = new ApiProductRepository();
@@ -69,7 +69,7 @@ class ProductController
 
     public function getProductVariants(Request $request, Response $response, array $args)
     {
-        return $response->withJson((new ApiProductRepository)->getProductVariants($request->getParam('productId')));
+        return $response->withHeader('Access-Control-Allow-Origin','*')->withJson((new ApiProductRepository)->getProductVariants($request->getParam('productId')));
     }
 
 }
