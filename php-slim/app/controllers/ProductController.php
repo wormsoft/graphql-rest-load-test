@@ -29,7 +29,7 @@ class ProductController
         if ($this->redis) {
             $prod = $this->redis->get('product_' . $id);
             if ($prod) {
-                return $response->withJson($prod);
+                return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($prod);
             }
             $apiProductRepository = new ApiProductRepository();
             $prod = $apiProductRepository->getProduct($id);
@@ -48,7 +48,7 @@ class ProductController
         $key = serialize($request->getParam('query') . '_rest');
         if ($this->redis) {
             if ($productList = $this->redis->get($key)) {
-                return $productList;
+                return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($productList);
             }
             $apiProductRepository = new ApiProductRepository();
             $prodList = $apiProductRepository->getProductList($request->getParam('query'));
@@ -64,7 +64,7 @@ class ProductController
         foreach ($prodList['products'] as $key => $item) {
             $prodList['products'][$key]['variants'] = $apiProductRepository->getProductVariants($item['id']);
         }
-        return $response->withJson($prodList);
+        return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($prodList);
     }
 
     public function getProductVariants(Request $request, Response $response, array $args)
