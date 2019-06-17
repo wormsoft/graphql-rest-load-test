@@ -58,15 +58,15 @@ module.exports = {
     '@nuxtjs/apollo',
    // '@nuxtjs/proxy',
   ],
-  proxy: {
-    '/graphql': API_HOST,
-    '/api': {
-      target: API_HOST,
-      pathRewrite: {
-        '^/api' : '/'
-      }
-    }
-  },
+  // proxy: {
+  //   '/graphql': API_HOST,
+  //   '/api': {
+  //     target: API_HOST,
+  //     pathRewrite: {
+  //       '^/api' : '/'
+  //     }
+  //   }
+  // },
   apollo: {
     clientConfigs: {
       default: {
