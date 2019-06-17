@@ -55,7 +55,7 @@ return function (App $app) {
         }
         return $response->withJson($result);
     });
-    $app->get('/db', function () {
-        print_r($_SERVER['SERVER_NAME']);
+    $app->options('/product-list', function (Request $request, Response $response) {
+        $response->withHeader('Access-Control-Allow-Origin','*');
     });
 };
