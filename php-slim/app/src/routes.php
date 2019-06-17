@@ -53,7 +53,7 @@ return function (App $app) {
         } catch (Exception $e) {
             throw $e;
         }
-        return $response->withJson($result);
+        return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($result);
     });
     $app->options('/product-list', function (Request $request, Response $response) {
         return $response->withHeader('Access-Control-Allow-Headers','*')->withHeader('Access-Control-Allow-Origin', '*');
