@@ -56,6 +56,6 @@ return function (App $app) {
         return $response->withJson($result);
     });
     $app->options('/product-list', function (Request $request, Response $response) {
-        return $response->withHeader('Access-Control-Allow-Origin','*');
+        return $response->withHeader('Access-Control-Allow-Headers','*');
     });
 };
