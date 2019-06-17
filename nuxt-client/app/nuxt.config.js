@@ -56,7 +56,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/apollo',
-    '@nuxtjs/proxy',
+   // '@nuxtjs/proxy',
   ],
   proxy: {
     '/graphql': API_HOST,
