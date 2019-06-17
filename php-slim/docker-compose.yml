@@ -20,6 +20,9 @@ services:
         - fpm
       environment:
         - VIRTUAL_HOST=${BASE_DOMAIN}
+        - LETSENCRYPT_HOST=${BASE_DOMAIN}
+        - LETSENCRYPT_EMAIL=https@obvu.ru
+        - HTTPS_METHOD=noredirect
       expose:
         - 80
       links:

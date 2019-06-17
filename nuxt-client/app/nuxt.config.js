@@ -2,7 +2,7 @@ require('dotenv').config()
 const pkg = require('./package')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
-let API_HOST = process.env.API_HOST
+let API_HOST = process.env.SITE_API_HOST
 console.log(API_HOST)
 module.exports = {
   mode: 'universal',

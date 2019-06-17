@@ -1,0 +1,31 @@
+version: "2"
+services:
+  interface-dev:
+    image: zvinger/docker-node-alpine:ubuntu
+    command: npm run dev
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    networks:
+      - reverse-proxy
+    environment:
+      VIRTUAL_HOST: ${BASE_APP_HOST}
+      LETSENCRYPT_HOST: ${BASE_APP_HOST}
+      LETSENCRYPT_EMAIL: https@obvu.ru
+      VIRTUAL_PORT: 3000
+      HOST: 0.0.0.0
+      SITE_API_HOST: ${SITE_API_HOST}
+      ADMIN_SOURCE_URL: ${ADMIN_SOURCE_URL}
+#      API_HOST: http://api-core.beauty-parfume.wip
+
+networks:
+
+  reverse-proxy:
+    external:
+      name: reverse-proxy
+#  back:
+#    driver: bridge
