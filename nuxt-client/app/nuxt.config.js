@@ -70,7 +70,7 @@ module.exports = {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: APP_HOST + '/graphql',
+        httpEndpoint: 'http://' + APP_HOST + '/graphql',
       }
     }
   },
