@@ -1,13 +1,13 @@
 <template>
   <div class="product">
     <div class="img-container">
-      <img :src="product.img" style="max-width: 400px;">
+      <img :src="$store.state.product.product.img" style="max-width: 400px;">
     </div>
     <div class="product-info">
       <div class="description">
         <legend>Описание:</legend>
         <span>
-        {{product.description}}
+        {{$store.state.product.product.description}}
       </span>
       </div>
       <div class="variants">
@@ -18,7 +18,7 @@
             <th>Описание</th>
             <th></th>
           </tr>
-          <tr v-for="variant in product.variants">
+          <tr v-for="variant in $store.state.product.product.variants">
             <td>{{variant.title}}</td>
             <td>{{variant.price}}</td>
             <td>{{variant.description}}</td>
@@ -33,19 +33,12 @@
 <script>
   export default {
     name: '_id',
-    data () {
-      return {
-        product: {},
-      }
-    },
-    async asyncData ({ store, route }) {
-      let data = {}
+    async fetch({store, route}) {
       if (route.query.type === 'gql') {
-        data.product = await store.dispatch('product/GET_PRODUCT_BY_ID_GQL', route.params.id)
+        await store.dispatch('product/GET_PRODUCT_BY_ID_GQL', route.params.id)
       } else {
-        data.product = await store.dispatch('product/GET_PRODUCT_BY_ID_REST', route.params.id)
+        await store.dispatch('product/GET_PRODUCT_BY_ID_REST', route.params.id)
       }
-      return data
     },
   }
 </script>

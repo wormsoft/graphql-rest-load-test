@@ -5,7 +5,7 @@
     </div>
     <div class="product-list">
       <ProductComponent
-        v-for="product in products"
+        v-for="product in $store.state.product.catalog.products"
         :title="product.title"
         :price="product.price"
         :id="Number(product.id)"
@@ -21,43 +21,17 @@
   export default {
     name: "catalog",
     components: {ProductComponent, CatalogFilters},
-    data() {
-      return {
-        products: null,
-      }
-    },
-    methods: {
-      getProductGQL() {
-        this.$store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_GQL', this.getData()).then((data) => {
-          this.products = data.products
+    async fetch({store, route}) {
+      if (route.query.type === 'gql') {
+        await store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_GQL', {
+          search: route.query.search,
+          page: route.query.page,
         })
-      },
-      getProductREST() {
-        this.$store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_REST', this.getData()).then((data) => {
-          this.products = data.products
-        })
-      },
-      getData() {
-        return {
-          search: this.$route.query.search,
-          page: this.$route.query.page,
-        }
-      }
-    },
-    watch: {
-      $route() {
-        if (this.$route.query.type === 'gql') {
-          this.getProductGQL()
-        } else {
-          this.getProductREST()
-        }
-      }
-    },
-    mounted() {
-      if (this.$route.query.type === 'gql') {
-        this.getProductGQL()
       } else {
-        this.getProductREST()
+        await store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_REST', {
+          search: route.query.search,
+          page: route.query.page,
+        })
       }
     }
   }
