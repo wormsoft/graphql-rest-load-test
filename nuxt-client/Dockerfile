@@ -7,6 +7,6 @@ RUN cd /tmp && npm install && mkdir -p /app && mv /tmp/node_modules /app/node_mo
 ADD ./app /app
 ARG SITE_API_HOST
 ENV SITE_API_HOST=${SITE_API_HOST}
-RUN echo ${SITE_API_HOST} && SITE_API_HOST=${SITE_API_HOST} ADMIN_SOURCE_URL=${SITE_API_HOST}api/site-info/vue-site
+RUN echo ${SITE_API_HOST} && SITE_API_HOST=${SITE_API_HOST} ADMIN_SOURCE_URL=${SITE_API_HOST}api/site-info/vue-site npm run build
 
-CMD npm run build && npm start
+CMD npm start

@@ -1,6 +1,6 @@
 version: "2"
 services:
-  fpm:
+  builder:
     build:
       context: .
       args:
