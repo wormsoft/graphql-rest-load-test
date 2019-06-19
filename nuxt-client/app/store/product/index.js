@@ -4,7 +4,9 @@ import api from '../../config/api/client'
 
 export const state = () => {
   return {
-    product: null,
+    product: {
+      
+    },
     catalog: [],
   }
 }
