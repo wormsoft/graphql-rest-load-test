@@ -2,6 +2,7 @@ version: "2"
 services:
   interface-dev:
     image: zvinger/docker-node-alpine:ubuntu
+    command: npm run dev
     ports:
       - 3000:3000
     expose:
