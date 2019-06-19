@@ -9,7 +9,7 @@ return function (App $app) {
     $app->get('/product-list', \App\controllers\ProductController::class . ':getProductList');
     $app->get('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
-    $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
+    $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
        // $body = $request->getQueryParams();
        // var_dump($body);
         $query = $request->getParsedBodyParam('query');
