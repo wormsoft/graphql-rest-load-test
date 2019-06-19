@@ -1,0 +1,25 @@
+version: "2"
+services:
+  site:
+    image: obvu/test_casesite
+    networks:
+      - reverse-proxy
+    expose:
+      - 3000
+    ports:
+      - 3333:3000
+    environment:
+      HOST: 0.0.0.0
+      VIRTUAL_HOST: ${BASE_APP_HOST}
+      PROJECT_BASE_URL: ${BASE_APP_HOST}
+      SITE_API_HOST: ${SITE_API_HOST}
+      LETSENCRYPT_EMAIL: shikto@mail.ru
+      LETSENCRYPT_HOST: ${BASE_APP_HOST}
+      HTTPS_METHOD: noredirect
+      VIRTUAL_PORT: 3333
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
+  back:
+    driver: bridge
