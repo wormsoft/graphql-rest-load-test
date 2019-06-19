@@ -5,19 +5,16 @@ use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+
 return function (App $app) {
     $app->get('/product-list', \App\controllers\ProductController::class . ':getProductList');
     $app->get('/product', \App\controllers\ProductController::class . ':getProduct');
-    $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
+    $app->post('/product-list', \App\controllers\ProductController::class . ':getProductList');
+    $app->post('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-        $body = $request->getParsedBody();
-        $app->getContainer()->get('redis')->set('body', $body, 100000);
-
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
-
-
         if (empty($query)) {
             $rawInput = file_get_contents('php://input');
             $input = json_decode($rawInput, true);
@@ -60,9 +57,79 @@ return function (App $app) {
         }
         return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson($result);
     });
+    $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-        $body = $app->getContainer()->get('redis')->get('body');
-
+        $to = $request->getParam('to');
+        if ($to === 'product') {
+            $body = array(
+                'query' => 'query {
+  productModule {
+    singleProduct(id: 10) {
+      id
+      articul
+      title
+      price
+      discount
+      description
+      status
+      isActive
+      isNew
+      isPopular
+      created_at
+      updated_at
+      img
+      variants {
+        id
+        articul
+        product_id
+        title
+        price
+        discount
+        description
+        status
+        isActive
+        isNew
+        isPopular
+        created_at
+        updated_at
+        img
+      }
+    }
+  }
+}',
+                'variables' =>
+                    array(),
+                'operationName' => NULL,
+            );
+        } else {
+            $body = array(
+                'query' => 'query {
+  productModule {
+    catalog(query:  {search: "",  page:  "1"}) {
+      totalCount
+      products {
+        id
+        articul
+        title
+        price
+        discount
+        description
+        status
+        isActive
+        isNew
+        isPopular
+        created_at
+        updated_at
+        img
+      }
+    }
+  }
+}',
+                'variables' =>
+                    array(),
+                'operationName' => NULL,
+            );
+        }
         $query = $body['query'] ?: null;
         $variables = $body['variables'] ?: null;
         $operation = $body['operation'] ?: null;
