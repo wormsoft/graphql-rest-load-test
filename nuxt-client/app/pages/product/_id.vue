@@ -34,11 +34,10 @@
   export default {
     name: '_id',
     async mounted({store, route}) {
-      data = {}
       if (route.query.type === 'gql') {
-        await store.dispatch('product/GET_PRODUCT_BY_ID_GQL', route.params.id)
+        await this.$store.dispatch('product/GET_PRODUCT_BY_ID_GQL', this.$route.params.id)
       } else {
-        await store.dispatch('product/GET_PRODUCT_BY_ID_REST', route.params.id)
+        await this.$store.dispatch('product/GET_PRODUCT_BY_ID_REST', this.$route.params.id)
       }
     },
   }

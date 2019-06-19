@@ -22,16 +22,15 @@
     name: "catalog",
     components: {ProductComponent, CatalogFilters},
     async mounted({store, route}) {
-      console.log('f');
       if (route.query.type === 'gql') {
-        await store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_GQL', {
-          search: route.query.search,
-          page: route.query.page,
+        await this.$store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_GQL', {
+          search: this.$route.query.search,
+          page: this.$route.query.page,
         })
       } else {
-        await store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_REST', {
-          search: route.query.search,
-          page: route.query.page,
+        await this.$store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_REST', {
+          search: this.$route.query.search,
+          page: this.$route.query.page,
         })
       }
     }
