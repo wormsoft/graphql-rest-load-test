@@ -10,7 +10,7 @@ return function (App $app) {
     $app->get('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-        $body = $request->getQueryParam();
+        $body = $request->getQueryParams();
         var_dump($body);die;
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
