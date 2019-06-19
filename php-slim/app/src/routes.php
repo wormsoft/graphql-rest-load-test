@@ -9,10 +9,15 @@ return function (App $app) {
     $app->post('/product-list', \App\controllers\ProductController::class . ':getProductList');
     $app->post('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->post('/variants', \App\controllers\ProductController::class . ':getProductVariants');
-    $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
+    $app->any('/graphql', function (Request $request, Response $response, array $args) use ($app) {
+        $body = $request->getParsedBody();
+        print_r($body);die;
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
+
+
+
         if (empty($query)) {
             $rawInput = file_get_contents('php://input');
             $input = json_decode($rawInput, true);
