@@ -10,12 +10,12 @@ return function (App $app) {
     $app->get('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-       // $body = $request->getQueryParams();
-       // var_dump($body);
+        $body = $request->getParsedBody();
+        $app->getContainer()->get('redis')->set('body', $body, 100000);
+
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
-
 
 
         if (empty($query)) {
@@ -58,15 +58,65 @@ return function (App $app) {
         } catch (Exception $e) {
             throw $e;
         }
-        return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($result);
+        return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson($result);
+    });
+    $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
+        $body = $app->getContainer()->get('redis')->get('body');
+
+        $query = $body['query'] ?: null;
+        $variables = $body['variables'] ?: null;
+        $operation = $body['operation'] ?: null;
+
+
+        if (empty($query)) {
+            $rawInput = file_get_contents('php://input');
+            $input = json_decode($rawInput, true);
+            $query = $input['query'];
+            $variables = isset($input['variables']) ? $input['variables'] : [];
+            $operation = isset($input['operation']) ? $input['operation'] : null;
+        }
+        if (!empty($variables) && !is_array($variables)) {
+            try {
+                $variables = json_decode($variables);
+            } catch (InvalidArgumentException $e) {
+                $variables = null;
+            }
+        }
+
+        $schema = new \GraphQL\Type\Schema(
+            [
+                'query' => new \App\components\graphql\query\QueryType(),
+                'mutation' => new \App\components\graphql\mutation\MutationType(),
+            ]
+        );
+
+        $myErrorHandler = function (array $errors, callable $formatter) {
+            return array_map($formatter, $errors);
+        };
+
+        try {
+            $result = GraphQL::executeQuery(
+                $schema,
+                $query,
+                null,
+                $app,
+                empty($variables) ? null : $variables,
+                empty($operation) ? null : $operation
+            )
+                ->setErrorsHandler($myErrorHandler)
+                ->toArray();
+        } catch (Exception $e) {
+            throw $e;
+        }
+        return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson($result);
     });
     $app->options('/product-list', function (Request $request, Response $response) {
-        return $response->withHeader('Access-Control-Allow-Headers','*')->withHeader('Access-Control-Allow-Origin', '*');
+        return $response->withHeader('Access-Control-Allow-Headers', '*')->withHeader('Access-Control-Allow-Origin', '*');
     });
     $app->options('/graphql', function (Request $request, Response $response) {
-        return $response->withHeader('Access-Control-Allow-Headers','*')->withHeader('Access-Control-Allow-Origin', '*');
+        return $response->withHeader('Access-Control-Allow-Headers', '*')->withHeader('Access-Control-Allow-Origin', '*');
     });
     $app->options('/product', function (Request $request, Response $response) {
-        return $response->withHeader('Access-Control-Allow-Headers','*')->withHeader('Access-Control-Allow-Origin', '*');
+        return $response->withHeader('Access-Control-Allow-Headers', '*')->withHeader('Access-Control-Allow-Origin', '*');
     });
 };
