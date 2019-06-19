@@ -21,7 +21,8 @@
   export default {
     name: "catalog",
     components: {ProductComponent, CatalogFilters},
-    async asyncData({store, route}) {
+    async mounted({store, route}) {
+      console.log('f');
       if (route.query.type === 'gql') {
         await store.dispatch('product/GET_PRODUCT_LIST_BY_QUERY_GQL', {
           search: route.query.search,

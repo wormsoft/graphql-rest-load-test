@@ -33,7 +33,8 @@
 <script>
   export default {
     name: '_id',
-    async asyncData({store, route}) {
+    async mounted({store, route}) {
+      data = {}
       if (route.query.type === 'gql') {
         await store.dispatch('product/GET_PRODUCT_BY_ID_GQL', route.params.id)
       } else {
