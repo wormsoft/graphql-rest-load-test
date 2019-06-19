@@ -10,7 +10,6 @@ return function (App $app) {
     $app->get('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->post('/product-list', \App\controllers\ProductController::class . ':getProductList');
     $app->post('/product', \App\controllers\ProductController::class . ':getProduct');
-    $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
         $body = $request->getParsedBody();
         $app->getContainer()->get('redis')->set('body', $body, 100000);
@@ -62,6 +61,7 @@ return function (App $app) {
         }
         return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson($result);
     });
+    $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
         $body = $app->getContainer()->get('redis')->get('body');
 

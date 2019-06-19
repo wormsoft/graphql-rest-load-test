@@ -38,7 +38,7 @@ class ProductQueryType extends ObjectType
                     'variants' => [
                         'type' => Type::listOf(new ProductVariantQueryType()),
                         'resolve' => function ($root) {
-                            return (new ApiProductRepository)->getProductVariants($root['id']);
+                            return $root['variants'];
                         }
                     ],
                 ];

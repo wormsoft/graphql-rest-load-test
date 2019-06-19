@@ -40,14 +40,6 @@ services:
         XDEBUG_CONFIG: remote_host=${REMOTE_HOST}
         PHP_IDE_CONFIG: serverName=debug
 
-    redis:
-      networks:
-        - back
-      image: redis
-      restart: always
-      volumes:
-        - ./storage/redis/data:/data
-
 networks:
   reverse-proxy:
       external:

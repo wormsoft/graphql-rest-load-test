@@ -30,19 +30,7 @@ class ProductModuleQueryType extends ObjectType
                         'args' => [
                             'id' => Type::nonNull(Type::int())
                         ],
-                        'resolve' => function ($root, $args, $app) {
-                            /* @var $redis \redis */
-                            $redis = $app->getContainer()->get('redis');
-                            if ($redis) {
-                                $key = serialize($args);
-                                $result = $redis->get($key);
-                                if ($result) {
-                                    return $result;
-                                }
-                                $result = (new ApiProductRepository())->getProduct($args['id']);
-                                $redis->set($key, $result);
-                                return $result;
-                            }
+                        'resolve' => function ($root, $args) {
                             return (new ApiProductRepository())->getProduct($args['id']);
                         }
                     ],
@@ -51,19 +39,7 @@ class ProductModuleQueryType extends ObjectType
                         'args' => [
                             'query' => new ProductQueryInputType(),
                         ],
-                        'resolve' => function ($root, $args, $app) {
-                            /* @var $redis MyRedis */
-                            $redis = $app->getContainer()->get('redis');
-                            if ($redis) {
-                                $key = serialize($args);
-                                $result = $redis->get($key);
-                                if ($result) {
-                                    return $result;
-                                }
-                                $result = (new ApiProductRepository())->getProductList($args['query']);
-                                $redis->set($key, $result);
-                                return $result;
-                            }
+                        'resolve' => function ($root, $args) {
                             return (new ApiProductRepository())->getProductList($args['query']);
                         }
                     ]
