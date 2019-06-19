@@ -30,6 +30,7 @@ return function (App $app) {
         return new PDO($container['settings']['db']['dsn']);
     };
     $container['redis'] = function () {
+        return false;
         if (!class_exists('Redis')) {
             return false;
         }
