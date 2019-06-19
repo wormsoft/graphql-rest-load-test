@@ -11,7 +11,7 @@ return function (App $app) {
     $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
         $body = $request->getParsedBody();
-        print_r($body);die;
+        var_dump($body);die;
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
