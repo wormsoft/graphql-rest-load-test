@@ -17,12 +17,13 @@ app.get('/listGQL', async function (req, res) {
 })
 
 app.get('/productRest', async function (req, res) {
+  //todo описать получение продукта. тут должно быть два запроса - сам товар и его вариации
   let data = await axios.post(API_HOST + '/product', {id: 2})
   res.send(data.data)
 })
 
 app.get('/productGQL', async function (req, res) {
-  //todo описать GQl получение продукта. тут должно быть два запроса - сам товар и его вариации
+  //todo описать получение продукта GQL. Один запрос
   let data = await axios.post(API_HOST + '/product', {id: 2})
   res.send(data.data)
 })
