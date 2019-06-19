@@ -6,10 +6,10 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 return function (App $app) {
-    $app->post('/product-list', \App\controllers\ProductController::class . ':getProductList');
-    $app->post('/product', \App\controllers\ProductController::class . ':getProduct');
-    $app->post('/variants', \App\controllers\ProductController::class . ':getProductVariants');
-    $app->any('/graphql', function (Request $request, Response $response, array $args) use ($app) {
+    $app->get('/product-list', \App\controllers\ProductController::class . ':getProductList');
+    $app->get('/product', \App\controllers\ProductController::class . ':getProduct');
+    $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
+    $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
         $body = $request->getParsedBody();
         print_r($body);die;
         $query = $request->getParsedBodyParam('query');
