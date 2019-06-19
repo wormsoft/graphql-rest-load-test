@@ -12,9 +12,6 @@ return function (App $app) {
     $app->post('/product-list', \App\controllers\ProductController::class . ':getProductList');
     $app->post('/product', \App\controllers\ProductController::class . ':getProduct');
     $app->post('/graphql', function (Request $request, Response $response, array $args) use ($app) {
-        print_r(json_encode($request->getParsedBody()));
-        die;
-        file_put_contents(__DIR__ . '/body.json', json_encode($request->getParsedBody()));
         $query = $request->getParsedBodyParam('query');
         $variables = $request->getParsedBodyParam('variables');
         $operation = $request->getParsedBodyParam('operation');
@@ -124,22 +121,6 @@ return function (App $app) {
         created_at
         updated_at
         img
-        variants {
-          id
-          articul
-          product_id
-          title
-          price
-          discount
-          description
-          status
-          isActive
-          isNew
-          isPopular
-          created_at
-          updated_at
-          img
-        }
       }
     }
   }
