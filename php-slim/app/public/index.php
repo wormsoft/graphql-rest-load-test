@@ -8,7 +8,7 @@ if (PHP_SAPI == 'cli-server') {
         return false;
     }
 }
-const DB = '/' . __DIR__ . '/../database/db.sqlite';
+const DB =  __DIR__ . '/../database/db.sqlite';
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
