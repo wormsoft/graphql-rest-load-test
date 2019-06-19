@@ -35,6 +35,8 @@ class ApiProductRepository
         }
         if (isset($query['page'])) {
             $offset = $query['page'] * $count;
+        }else{
+            $offset = 16;
         }
 
         $rea = $sqlLite->query("SELECT * FROM product" . $where . " LIMIT $count OFFSET $offset");
