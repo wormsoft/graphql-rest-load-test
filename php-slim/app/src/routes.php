@@ -57,7 +57,7 @@ return function (App $app) {
         }
         return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson($result);
     });
-    $app->get('/variants', \App\controllers\ProductController::class . ':getProductVariants');
+    $app->post('/variants', \App\controllers\ProductController::class . ':getProductVariants');
     $app->get('/graphql', function (Request $request, Response $response, array $args) use ($app) {
         $to = $request->getParam('to');
         if ($to === 'product') {
