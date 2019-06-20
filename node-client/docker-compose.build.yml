@@ -1,0 +1,14 @@
+version: "2"
+services:
+  builder:
+    build:
+      context: .
+      args:
+        SITE_API_HOST: ${SITE_API_HOST}
+    image: ${DOCKER_HUB_ORGANIZATION}/${DOCKER_HUB_PREFIX}site
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
+#  back:
+#    driver: bridge

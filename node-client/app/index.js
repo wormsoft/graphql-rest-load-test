@@ -3,7 +3,7 @@ require('dotenv').config()
 let axios = require('axios')
 var express = require('express')
 var app = express()
-const API_HOST = process.env.API_HOST || 'https://api.test-case.s4.obvu.ru'
+const API_HOST = process.env.SITE_API_HOST || 'https://api.test-case.s4.obvu.ru'
 
 app.get('/listRest', async function (req, res) {
   let data = await axios.get(API_HOST + '/product-list')
@@ -17,7 +17,7 @@ app.get('/listGQL', async function (req, res) {
 
 app.get('/productRest', async function (req, res) {
   let data = await axios.post(API_HOST + '/product', {id: req.query.id ? req.query.id : 1})
-  if (data.data){
+  if (data.data) {
     let variants = await axios.post(API_HOST + '/variants', {productId: req.query.id ? req.query.id : 1})
     data.data.variants = variants.data
   }
