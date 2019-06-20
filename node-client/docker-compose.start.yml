@@ -6,8 +6,6 @@ services:
       - reverse-proxy
     expose:
       - 3000
-    ports:
-      - 3333:3000
     environment:
       HOST: 0.0.0.0
       VIRTUAL_HOST: ${BASE_APP_HOST}
@@ -16,7 +14,6 @@ services:
       LETSENCRYPT_EMAIL: shikto@mail.ru
       LETSENCRYPT_HOST: ${BASE_APP_HOST}
       HTTPS_METHOD: noredirect
-      VIRTUAL_PORT: 3333
 networks:
   reverse-proxy:
     external:
