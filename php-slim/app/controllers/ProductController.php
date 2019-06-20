@@ -27,6 +27,7 @@ class ProductController
     {
         $apiProductRepository = new ApiProductRepository();
         $prod = $apiProductRepository->getProduct($request->getParam('id'));
+        unset($prod['variants']);
         return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson($prod);
     }
 
@@ -39,7 +40,8 @@ class ProductController
 
     public function getProductVariants(Request $request, Response $response, array $args)
     {
-        return $response->withHeader('Access-Control-Allow-Origin', '*')->withJson((new ApiProductRepository)->getProductVariants($request->getParam('productId')));
+        return $response->withHeader('Access-Control-Allow-Origin', '*')
+            ->withJson((new ApiProductRepository)->getProductVariants($request->getParam('productId')));
     }
 
 }

@@ -16,12 +16,16 @@ app.get('/listGQL', async function (req, res) {
 })
 
 app.get('/productRest', async function (req, res) {
-  let data = await axios.post(API_HOST + '/product', {id: 2})
+  let data = await axios.post(API_HOST + '/product', {id: req.query.id ? req.query.id : 1})
+  if (data.data){
+    let variants = await axios.post(API_HOST + '/variants', {productId: req.query.id ? req.query.id : 1})
+    data.data.variants = variants.data
+  }
   res.send(data.data)
 })
 
 app.get('/productGQL', async function (req, res) {
-  let data = await axios.post(API_HOST + '/graphql?to=product', {id: 2})
+  let data = await axios.get(API_HOST + '/graphql?to=product', {id: 2})
   res.send(data.data)
 })
 

@@ -9,8 +9,6 @@
 namespace App\components\repository;
 
 
-use SQLite3;
-
 class ApiProductRepository
 {
 
@@ -26,15 +24,9 @@ class ApiProductRepository
 
     public function getProductVariants($productId)
     {
-        $sqlLite = new SQLite3(DB);
-        $rea = $sqlLite->query('SELECT * FROM product_variant WHERE product_id=' . $productId);
+        $product = $this->getProductByKey($productId);
+        return $product['variants'];
 
-        $variants = [];
-        while ($row = $rea->fetchArray(SQLITE3_ASSOC)) {
-            $row['img'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $row['img'];
-            $variants[] = $row;
-        }
-        return $variants;
     }
 
     private function getProductByKey($key)
